@@ -4,6 +4,10 @@
 
 A simple **stock dashboard** built with **HTML, CSS, and JavaScript**, bundled using **Vite**, and containerized with **Docker**. The app is served via **Nginx**, with **HAProxy** managing **load balancing** across multiple instances.
 
+API Credit : https://www.alphavantage.co/
+
+API Documentation : https://www.alphavantage.co/documentation/
+
 ---
 
 ##  Tech Stack
