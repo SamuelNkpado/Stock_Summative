@@ -200,6 +200,40 @@ docker pull samuelchima/stock-dashbord:v1
 docker run -p 8083:8080 samuelchima/stock-dashbord:v1
 ```
 
+Here's the updated snippet you can add to your `README.md` to show that your load balancer switches between both backends (`web1` and `web2`):
+
 ---
+
+###  Load Balancer Testing Evidence
+
+To verify that the HAProxy load balancer distributes traffic correctly to the backend servers, I ran the following `curl` command multiple times and checked the `X-Backend` response header:
+
+```bash
+curl -v http://localhost | grep -o "X-Backend:.*"
+```
+
+####  Response from `web1`:
+
+```bash
+< HTTP/1.1 200 OK
+< server: nginx/1.29.0
+< x-backend: web1
+X-Backend: web1
+```
+
+#### Response from `web2`:
+
+```bash
+< HTTP/1.1 200 OK
+< server: nginx/1.29.0
+< x-backend: web2
+X-Backend: web2
+```
+
+These outputs confirm that the load balancer is functioning correctly and alternating requests between the backend servers (`web1` and `web2`) using round-robin load balancing.
+
+---
+Thanks.
+
 
 
