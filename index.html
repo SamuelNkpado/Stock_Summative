@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Trading Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<header>
+        <!-- <h1>
+            <a href="index.html">
+                <span class="fa-solid fa-terminal" aria-hidden="true"></span>
+                <span>Tech O'clock</span>
+            </a>
+        </h1>
+        <nav >
+            <button><a href="https://www.linkedin.com/company/tech-o-clock/?viewAsMember=true" target="_blank" id="techbutton">linkedin</a></button>
+        </nav> -->
+</header>
+
+<div class="container">
+    <!-- Header -->
+    <header class="header">
+        <h1><span class="fa-solid fa-terminal" aria-hidden="true"></span>
+                <span> Tech O'clock</span>  Stock Trading Dashboard</h1>
+        <p>Get real-time stock data, financial metrics, and cash flow analysis</p>
+    </header>
+
+    <!-- Search Section -->
+    <div class="search-section">
+        <div class="search-card">
+            <h2><i class="fas fa-search"></i> Search Stock</h2>
+            <p>Enter a stock symbol (e.g., AAPL, GOOGL, TSLA)</p>
+            <div class="search-input-group">
+                <input type="text" id="stockSymbol" placeholder="Enter stock symbol..." maxlength="10">
+                <button id="searchBtn" onclick="searchStock()">
+                    <span id="searchBtnText">Search</span>
+                    <i id="searchSpinner" class="fas fa-spinner fa-spin" style="display: none;"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Display -->
+    <div id="errorAlert" class="alert alert-error" style="display: none;">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="errorMessage"></span>
+    </div>
+
+    <!-- Loading State -->
+    <div id="loadingState" class="loading-grid" style="display: none;">
+        <div class="skeleton-card">
+            <div class="skeleton-header"></div>
+            <div class="skeleton-content"></div>
+        </div>
+        <div class="skeleton-card">
+            <div class="skeleton-header"></div>
+            <div class="skeleton-content"></div>
+        </div>
+        <div class="skeleton-card">
+            <div class="skeleton-header"></div>
+            <div class="skeleton-content"></div>
+        </div>
+    </div>
+
+    <!-- Stock Data Display -->
+    <div id="stockDataSection" style="display: none;">
+        <!-- Main Stock Info -->
+        <div class="main-stock-card">
+            <div class="stock-header">
+                <div class="stock-title">
+                    <h2 id="stockSymbolDisplay"></h2>
+                    <p id="stockNameDisplay"></p>
+                </div>
+                <div id="stockBadge" class="badge">
+                    <i id="trendIcon"></i>
+                    <span id="changePercent"></span>
+                </div>
+            </div>
+            <div class="stock-metrics">
+                <div class="metric">
+                    <div id="currentPrice" class="metric-value"></div>
+                    <div class="metric-label">Current Price</div>
+                </div>
+                <div class="metric">
+                    <div id="priceChange" class="metric-value"></div>
+                    <div class="metric-label">Change</div>
+                </div>
+                <div class="metric">
+                    <div id="volume" class="metric-value"></div>
+                    <div class="metric-label">Volume</div>
+                </div>
+                <div class="metric">
+                    <div id="marketCap" class="metric-value"></div>
+                    <div class="metric-label">Market Cap</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-card-header">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h3>P/E Ratio</h3>
+                </div>
+                <div class="metric-card-content">
+                    <div id="peRatio" class="large-metric"></div>
+                    <p>Price to Earnings</p>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-card-header">
+                    <i class="fas fa-arrow-trend-up"></i>
+                    <h3>52W High</h3>
+                </div>
+                <div class="metric-card-content">
+                    <div id="high52Week" class="large-metric high"></div>
+                    <p>52-Week High</p>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-card-header">
+                    <i class="fas fa-arrow-trend-down"></i>
+                    <h3>52W Low</h3>
+                </div>
+                <div class="metric-card-content">
+                    <div id="low52Week" class="large-metric low"></div>
+                    <p>52-Week Low</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cash Flow Table -->
+        <div id="cashFlowSection" class="cash-flow-card">
+            <div class="cash-flow-header">
+                <i class="fas fa-chart-bar"></i>
+                <h3>Quarterly Cash Flow Analysis</h3>
+                <p>Latest quarterly cash flow data (in millions)</p>
+            </div>
+            <div class="table-container">
+                <table id="cashFlowTable">
+                    <thead>
+                    <tr>
+                        <th>Period</th>
+                        <th>Operating CF</th>
+                        <th>Investing CF</th>
+                        <th>Financing CF</th>
+                        <th>Free CF</th>
+                    </tr>
+                    </thead>
+                    <tbody id="cashFlowTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popular Stocks -->
+    <div class="popular-stocks-card">
+        <h3>Popular Stocks to Try</h3>
+        <p>Click on any symbol to search</p>
+        <div class="popular-stocks">
+            <button class="stock-btn" onclick="searchPopularStock('AAPL')">AAPL</button>
+            <button class="stock-btn" onclick="searchPopularStock('GOOGL')">GOOGL</button>
+            <button class="stock-btn" onclick="searchPopularStock('MSFT')">MSFT</button>
+            <button class="stock-btn" onclick="searchPopularStock('TSLA')">TSLA</button>
+            <button class="stock-btn" onclick="searchPopularStock('AMZN')">AMZN</button>
+            <button class="stock-btn" onclick="searchPopularStock('META')">META</button>
+            <button class="stock-btn" onclick="searchPopularStock('NVDA')">NVDA</button>
+            <button class="stock-btn" onclick="searchPopularStock('NFLX')">NFLX</button>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="/script.js"></script>
+
+</body>
+</html>
