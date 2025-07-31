@@ -8,6 +8,8 @@ API Credit : https://www.alphavantage.co/
 
 API Documentation : https://www.alphavantage.co/documentation/
 
+Video Link : https://www.awesomescreenshot.com/video/42610825?key=736ee1acb8762c360291daeb1e716d62
+
 ---
 
 ##  Tech Stack
